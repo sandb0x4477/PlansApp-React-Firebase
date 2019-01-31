@@ -23,15 +23,17 @@ const store = createStore(
       })
     ),
     reduxFirestore(firebaseConfig),
-    reactReduxFirebase(firebaseConfig)
+    reactReduxFirebase(firebaseConfig, { attachAuthIsReady: true, useFirestoreForProfile: true, userProfile: 'users'})
   )
 );
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+store.firebaseAuthIsReady.then(() => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  );
+});
 
 serviceWorker.unregister();

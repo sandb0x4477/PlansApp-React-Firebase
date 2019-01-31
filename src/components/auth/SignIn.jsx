@@ -53,13 +53,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispachToProps = dispach => {
+const mapDispatchToProps = dispatch => {
   return {
-    signIn: creds => dispach(signIn(creds))
+    signIn: creds => dispatch(signIn(creds))
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispachToProps
+  mapDispatchToProps
 )(SignIn);

@@ -1,15 +1,51 @@
 export const signIn = creds => {
-  return (dispach, getState, { getFirebase }) => {
+  return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
 
     firebase
       .auth()
       .signInWithEmailAndPassword(creds.email, creds.password)
       .then(() => {
-        dispach({ type: 'LOGIN_SUCCES' });
+        dispatch({ type: 'LOGIN_SUCCESS' });
       })
       .catch(err => {
-        dispach({ type: 'LOGIN_ERROR', err });
+        dispatch({ type: 'LOGIN_ERROR', err });
+      });
+  };
+};
+
+export const signOut = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch({ type: 'LOGOUT_SUCCESS' });
+      });
+  };
+};
+
+export const signUp = newUser => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(res => {
+        return firestore.collection('users').doc(res.user.uid).set({
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          initial: newUser.firstName[0] + newUser.lastName[0]
+        })
+      })
+      .then(() => {
+        dispatch({ type: 'REGISTER_SUCCESS' });
+      }).catch(err => {
+        dispatch({ type: 'REGISTER_ERROR', err });
       });
   };
 };
