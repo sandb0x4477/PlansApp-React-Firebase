@@ -1,13 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 
 const Notifications = (props) => {
   const { notifications } = props;
   console.log('notifications', notifications);
-
-//   const notificationList = notifications ? notifications
-//     .map(notif => (
-//   return <li>{notif.content}</li>;
-// ) : null;
 
   return (
     <div className='section'>
@@ -17,7 +13,11 @@ const Notifications = (props) => {
           <ul className='notification'>
             {notifications && notifications.map(n => {
               return (
-                <li key={n.id}>{n.user}, {n.content}</li>
+                <li key={n.id}>
+                  <span className="pink-text">{n.user} </span>
+                  <span>{n.content}</span>
+                  <div className="note-date grey-text">{moment(n.time.toDate()).fromNow()}</div>
+                </li>
               );
             })}
           </ul>
