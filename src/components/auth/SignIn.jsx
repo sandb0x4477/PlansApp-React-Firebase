@@ -20,6 +20,16 @@ class SignIn extends Component {
     this.props.signIn(this.state);
   };
 
+  handleUser1Login = () => {
+    const user1 = {
+      email: 'user1@test.com',
+      password: 'password'
+    };
+
+    this.props.signIn(user1);
+  };
+
+
   render() {
     const { authError } = this.props;
     return (
@@ -37,6 +47,9 @@ class SignIn extends Component {
           </div>
           <div className='input-field'>
             <button className='btn pink lighten-1'>Login</button>
+
+            <button className='btn teal lighten-1 right'
+                    onClick={this.handleUser1Login}>Login as User1 for testing</button>
             <div className='red-text center'>
               { authError ? <p>{authError}</p> : null }
             </div>
@@ -45,6 +58,7 @@ class SignIn extends Component {
       </div>
     );
   }
+
 }
 
 const mapStateToProps = state => {
